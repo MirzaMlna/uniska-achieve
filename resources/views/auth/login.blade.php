@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <!-- Session Status -->
+
     <x-auth-session-status class="mb-4" :status="session('status')" />
     <div class="text-center text-gray-900 dark:text-white mb-5">
         <img src="{{ asset('images/uniska_logo.png') }}" alt="uniska_logo" class="w-32 h-32 mx-auto">
@@ -7,7 +7,7 @@
         <p class="font-light italic">Tempat untuk prestasi terbaikmu!</p>
     </div>
 
-
+    <!-- Session Status -->
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -39,15 +39,18 @@
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                href="{{ route('register') }}">
-                {{ __('Belum punya akun?') }}
-            </a>
-            <x-primary-button class="ms-3">
+        <div class="flex items-center mt-4">
+            <p class="text-white text-sm me-auto">Belum Punya akun? <span>
+                    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        href="{{ route('register') }}">
+                        {{ __('Klik disini') }}
+                    </a>
+                </span>
+            </p>
+            <x-primary-button class="ms-auto">
                 {{ __('Masuk') }}
             </x-primary-button>
         </div>
+
     </form>
 </x-guest-layout>
