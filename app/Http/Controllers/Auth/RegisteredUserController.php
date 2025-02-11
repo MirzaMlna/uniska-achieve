@@ -43,6 +43,6 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        return redirect(route('login', absolute: false));
+        return redirect(route('login', absolute: false))->with('status', 'Akun berhasil didaftarkan! Harap tunggu verifikasi dari admin sebelum bisa masuk.');
     }
 }

@@ -1,6 +1,5 @@
 <x-guest-layout>
 
-    <x-auth-session-status class="mb-4" :status="session('status')" />
     <div class="text-center text-gray-900 dark:text-white mb-5">
         <img src="{{ asset('images/uniska_logo.png') }}" alt="uniska_logo" class="w-32 h-32 mx-auto">
         <p class="text-xl">Selamat Datang di <span class="font-bold">UNISKA Achieve</span></p>
@@ -8,6 +7,8 @@
     </div>
 
     <!-- Session Status -->
+    <x-auth-session-status class="mb-4 text-center" :status="session('status')" />
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -48,7 +49,7 @@
                 </span>
             </p>
             <x-primary-button class="ms-auto">
-                {{ __('Masuk') }}
+                {{ __('Buat Akun') }}
             </x-primary-button>
         </div>
 
