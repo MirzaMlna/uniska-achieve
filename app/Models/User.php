@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'nim',
         'password',
+        'is_approved'
     ];
 
     /**

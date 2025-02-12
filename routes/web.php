@@ -17,7 +17,6 @@ Route::get('/not-approved', function () {
     return view('auth.not-approved');
 })->name('not_approved');
 
-Route::resource('user', UserController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,5 +27,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::post('/user/{id}/verify', [UserController::class, 'verify'])->name('user.verify');
+
+Route::resource('user', UserController::class);
 
 require __DIR__ . '/auth.php';
