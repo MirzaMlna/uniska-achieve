@@ -27,9 +27,9 @@
                                 <td class="border border-gray-300 px-4 py-2">{{ ucfirst($user->role) }}</td>
                                 <td class="border border-gray-300 px-4 py-2 text-center">
                                     @if ($user->is_approved)
-                                        <span class="px-3 py-1 text-white rounded-lg">✅</span>
+                                        <span class="px-3 py-1 bg-green-700 text-white rounded-lg">Sudah</span>
                                     @else
-                                        <span class="px-3 py-1 text-white rounded-lg">❌</span>
+                                        <span class="px-3 py-1 bg-red-700 text-white rounded-lg">Belum</span>
                                     @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
@@ -72,21 +72,77 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function confirmDelete(userId) {
-            Swal.fire({
-                title: "Apakah Anda yakin?",
-                text: "Data yang dihapus tidak bisa dikembalikan!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Ya, Hapus!",
-                cancelButtonText: "Batal"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + userId).submit();
+        document.addEventListener("DOMContentLoaded", function() {
+            const rowsPerPage = 10;
+            let currentPage = 1;
+            const table = document.querySelector("table tbody");
+            const rows = Array.from(table.querySelectorAll("tr"));
+            const totalRows = rows.length;
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+            function showPage(page) {
+                const start = (page - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+                rows.forEach((row, index) => {
+                    row.style.display = index >= start && index < end ? "table-row" : "none";
+                });
+            }
+
+            function createPagination() {
+                const paginationContainer = document.createElement("div");
+                paginationContainer.className = "mt-4 flex justify-end space-x-2";
+                paginationContainer.id = "pagination";
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const button = document.createElement("button");
+                    button.className = "px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-700";
+                    button.innerText = i;
+                    button.addEventListener("click", function() {
+                        currentPage = i;
+                        showPage(currentPage);
+                    });
+                    paginationContainer.appendChild(button);
                 }
-            });
-        }
+
+                // Menambahkan pagination setelah tabel
+                document.querySelector("table").after(paginationContainer);
+            }
+
+            function setupFilters() {
+                const thead = document.querySelector("table thead");
+                const filterRow = document.createElement("tr");
+
+                thead.querySelectorAll("th").forEach((th, colIndex) => {
+                    const filterCell = document.createElement("td");
+                    if (colIndex !== 5) { // Kolom "Aksi" tidak difilter
+                        const input = document.createElement("input");
+                        input.type = "text";
+                        input.placeholder = "Filter...";
+                        input.className = "px-2 py-1 border rounded w-full text-gray-800";
+
+                        input.addEventListener("keyup", function() {
+                            const filterValue = input.value.toLowerCase();
+                            rows.forEach(row => {
+                                const cell = row.cells[colIndex];
+                                if (cell) {
+                                    row.style.display = cell.textContent.toLowerCase()
+                                        .includes(filterValue) ? "table-row" : "none";
+                                }
+                            });
+                        });
+
+                        filterCell.appendChild(input);
+                    }
+                    filterRow.appendChild(filterCell);
+                });
+
+                thead.appendChild(filterRow);
+            }
+
+            showPage(currentPage);
+            createPagination();
+            setupFilters();
+        });
     </script>
+
 </x-app-layout>
