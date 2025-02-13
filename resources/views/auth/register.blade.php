@@ -10,6 +10,14 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
+        <!-- NIM -->
+        <div class="mt-4">
+            <x-input-label for="nim" :value="__('NIM')" />
+            <x-text-input id="nim" class="block mt-1 w-full" type="number" name="nim" :value="old('nim')"
+                required autocomplete="username" />
+            <x-input-error :messages="$errors->get('nim')" class="mt-2" />
+        </div>
+
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
@@ -18,12 +26,36 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        <!-- NIM -->
-        <div class="mt-4">
-            <x-input-label for="nim" :value="__('NIM')" />
-            <x-text-input id="nim" class="block mt-1 w-full" type="number" name="nim" :value="old('nim')"
-                required autocomplete="username" />
-            <x-input-error :messages="$errors->get('nim')" class="mt-2" />
+        <div class="mb-4">
+            <label for="study_program" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Program Studi <span class="text-gray-500">(Contoh : Teknik Informatika)</span>
+            </label>
+            <select id="program_studi" name="program_studi"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+                <option value="">Pilih Program Studi</option>
+                <option value="Ilmu Komunikasi">Ilmu Komunikasi</option>
+                <option value="Ilmu Administrasi Publik">Ilmu Administrasi Publik</option>
+                <option value="Pendidikan Bahasa Inggris">Pendidikan Bahasa Inggris</option>
+                <option value="Bimbingan dan Konseling">Bimbingan dan Konseling</option>
+                <option value="Pendidikan Kimia">Pendidikan Kimia</option>
+                <option value="Pendidikan Olahraga">Pendidikan Olahraga</option>
+                <option value="Manajemen">Manajemen</option>
+                <option value="Peternakan">Peternakan</option>
+                <option value="Agribisnis">Agribisnis</option>
+                <option value="Hukum Ekonomi Syari’ah">Hukum Ekonomi Syari’ah</option>
+                <option value="Ekonomi Syari’ah">Ekonomi Syari’ah</option>
+                <option value="Pendidikan Guru Madrasah Ibtidaiyah">Pendidikan Guru Madrasah Ibtidaiyah
+                </option>
+                <option value="Teknik Mesin">Teknik Mesin</option>
+                <option value="Teknik Sipil">Teknik Sipil</option>
+                <option value="Teknik Elektro">Teknik Elektro</option>
+                <option value="Teknik Industri">Teknik Industri</option>
+                <option value="Kesehatan Masyarakat">Kesehatan Masyarakat</option>
+                <option value="Ilmu Hukum">Ilmu Hukum</option>
+                <option value="Teknik Informatika">Teknik Informatika</option>
+                <option value="Sistem Informasi">Sistem Informasi</option>
+                <option value="Farmasi">Farmasi</option>
+            </select>
         </div>
 
         <!-- Password -->

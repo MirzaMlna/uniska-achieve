@@ -16,7 +16,7 @@
                             <th class="border border-gray-300 px-4 py-2 text-start">Role</th>
                             <th class="border border-gray-300 px-4 py-2 text-center">Verifikasi</th>
                             <th class="border border-gray-300 px-4 py-2 text-start">Mendaftar Pada</th>
-                            <th class="border border-gray-300 px-4 py-2 text-start">Aksi</th>
+                            <th class="border border-gray-300 px-4 py-2 text-start" rowspan="2">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,9 +33,9 @@
                                     @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    {{ $user->created_at->translatedFormat('l, d-m-Y; H:i') }}
+                                    {{ $user->created_at->translatedFormat('d-m-Y') }}
                                 </td>
-                                <td class="border border-gray-300 px-4 py-2">
+                                <td class="border border-gray-300 px-4 py-2  flex items-end justify-end">
                                     <div class="flex items-center space-x-2">
                                         <form action="{{ route('user.verify', $user->id) }}" method="POST">
                                             @csrf
@@ -72,6 +72,23 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        function confirmDelete(userId) {
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Data yang dihapus tidak bisa dikembalikan!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + userId).submit();
+                }
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             const rowsPerPage = 10;
             let currentPage = 1;
