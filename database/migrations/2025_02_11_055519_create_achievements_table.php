@@ -13,24 +13,27 @@ return new class extends Migration
     {
         Schema::create('achievements', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('users')->onDelete('cascade'); // Foreign key ke users.id (mahasiswa)
-            $table->enum('achievement_type', ['academic', 'non_academic']); // Jenis prestasi (akademik/non-akademik)
-            $table->string('achievement_level', 100); // Tingkat prestasi (nasional, internasional, dll)
-            $table->string('participation_type', 100); // Jenis kepesertaan (individu, tim, dll)
-            $table->string('execution_model', 100); // Model pelaksanaan (online, offline, hybrid)
-            $table->string('event_name', 255); // Nama kegiatan
-            $table->integer('participant_count'); // Jumlah peserta
-            $table->string('achievement_title', 255); // Capaian prestasi
-            $table->date('start_date'); // Tanggal mulai pelaksanaan
-            $table->date('end_date'); // Tanggal selesai pelaksanaan
-            $table->string('news_link', 255)->nullable(); // Link berita atau sosial media
-            $table->string('certificate_file', 255)->nullable(); // File sertifikat (path)
-            $table->string('award_photo_file', 255)->nullable(); // Foto penyerahan penghargaan (path)
-            $table->string('student_assignment_letter', 255)->nullable(); // Surat tugas mahasiswa (path)
-            $table->string('supervisor_assignment_letter', 255)->nullable(); // Surat tugas dosen pembimbing (path)
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending'); // Status verifikasi prestasi
-            $table->foreignId('verified_by')->nullable()->constrained('users')->onDelete('set null'); // Foreign key ke users.id (admin yang memverifikasi)
-            $table->timestamp('verified_at')->nullable(); // Waktu verifikasi
+            $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
+            $table->string('nim', 50); // NIM mahasiswa
+            $table->string('name', 255); // Nama mahasiswa
+            $table->string('study_program', 255); // Program studi mahasiswa
+            $table->enum('achievement_type', ['academic', 'non_academic']);
+            $table->string('achievement_level', 100);
+            $table->string('participation_type', 100);
+            $table->string('execution_model', 100);
+            $table->string('event_name', 255);
+            $table->integer('participant_count');
+            $table->string('achievement_title', 255);
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('news_link', 255)->nullable();
+            $table->string('certificate_file', 255)->nullable();
+            $table->string('award_photo_file', 255)->nullable();
+            $table->string('student_assignment_letter', 255)->nullable();
+            $table->string('supervisor_assignment_letter', 255)->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->foreignId('verified_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->timestamp('verified_at')->nullable();
             $table->timestamps();
         });
     }
