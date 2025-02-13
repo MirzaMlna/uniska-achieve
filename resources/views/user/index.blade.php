@@ -13,6 +13,7 @@
                         <tr class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white text-start">
                             <th class="border border-gray-300 px-4 py-2 text-start">NIM</th>
                             <th class="border border-gray-300 px-4 py-2 text-start">Nama</th>
+                            <th class="border border-gray-300 px-4 py-2 text-start">Program Studi</th>
                             <th class="border border-gray-300 px-4 py-2 text-start">Role</th>
                             <th class="border border-gray-300 px-4 py-2 text-center">Verifikasi</th>
                             <th class="border border-gray-300 px-4 py-2 text-start">Mendaftar Pada</th>
@@ -24,6 +25,7 @@
                             <tr class="text-gray-800 dark:text-gray-200">
                                 <td class="border border-gray-300 px-4 py-2">{{ $user->nim }}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{ $user->name }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $user->study_program }}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{ ucfirst($user->role) }}</td>
                                 <td class="border border-gray-300 px-4 py-2 text-center">
                                     @if ($user->is_approved)
@@ -131,7 +133,7 @@
 
                 thead.querySelectorAll("th").forEach((th, colIndex) => {
                     const filterCell = document.createElement("td");
-                    if (colIndex !== 5) { // Kolom "Aksi" tidak difilter
+                    if (colIndex !== 6) { // Kolom "Aksi" tidak difilter
                         const input = document.createElement("input");
                         input.type = "text";
                         input.placeholder = "Filter...";
