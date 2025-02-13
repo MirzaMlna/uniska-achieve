@@ -26,11 +26,11 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        <div class="mb-4">
+        <div class="mt-4">
             <label for="study_program" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Program Studi <span class="text-gray-500">(Contoh : Teknik Informatika)</span>
+                Program Studi
             </label>
-            <select id="program_studi" name="program_studi"
+            <select id="study_program" name="study_program"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
                 <option value="">Pilih Program Studi</option>
                 <option value="Ilmu Komunikasi">Ilmu Komunikasi</option>

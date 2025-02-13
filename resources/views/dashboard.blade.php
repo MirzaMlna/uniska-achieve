@@ -30,31 +30,6 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Tambah Prestasi</h3>
                 <form>
-                    <!-- Nama Mahasiswa -->
-                    <div class="mb-4">
-                        <label for="nama_mahasiswa"
-                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nama Mahasiswa</label>
-                        <input type="text" id="nama_mahasiswa" name="nama_mahasiswa"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
-                    </div>
-
-                    <!-- NIM -->
-                    <div class="mb-4">
-                        <label for="nim"
-                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">NIM</label>
-                        <input type="number" id="nim" name="nim"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
-                    </div>
-
-                    <!-- Program Studi -->
-                    <div class="mb-4">
-                        <label for="program_studi"
-                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">Program Studi <span
-                                class="text-gray-500">(Contoh : Teknik Informatika)</span></label>
-                        <input type="text" id="program_studi" name="program_studi"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
-                    </div>
-
                     <!-- Jenis Prestasi -->
                     <div class="mb-4">
                         <label for="jenis_prestasi"
@@ -160,8 +135,8 @@
 
                     <!-- Link Berita -->
                     <div class="mb-4">
-                        <label for="link_berita"
-                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">Link Berita</label>
+                        <label for="link_berita" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Link
+                            Berita</label>
                         <input type="url" id="link_berita" name="link_berita"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
                     </div>

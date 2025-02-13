@@ -49,7 +49,7 @@
                 </span>
             </p>
             <x-primary-button class="ms-auto">
-                {{ __('Buat Akun') }}
+                {{ __('Masuk') }}
             </x-primary-button>
         </div>
 
