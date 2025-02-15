@@ -22,7 +22,7 @@
             </div>
 
             <div class="w-full">
-                <a href="{{ route('achievement.create') }}" type="submit"
+                <a href="{{ route('achievements.create') }}" type="submit"
                     class="w-full bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 block text-center">
                     Tambahkan Prestasi Anda
                 </a>

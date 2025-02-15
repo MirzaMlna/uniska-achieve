@@ -8,16 +8,16 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('auth.login');
-});
+    return redirect()->route('dashboard');
+})->middleware('guest');
+
 Route::get('/register', function () {
     return view('auth.register');
-});
+})->middleware('guest');
 
 Route::get('/not-approved', function () {
     return view('auth.not-approved');
 })->name('not_approved');
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -27,11 +27,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('users', UserController::class);
+    Route::resource('achievements', AchievementController::class)->middleware('auth');
+
+
+    Route::post('/user/{id}/verify', [UserController::class, 'verify'])->name('user.verify');
 });
-
-Route::post('/user/{id}/verify', [UserController::class, 'verify'])->name('user.verify');
-
-Route::resource('user', UserController::class);
-Route::resource('achievement', AchievementController::class)->middleware('auth');
 
 require __DIR__ . '/auth.php';

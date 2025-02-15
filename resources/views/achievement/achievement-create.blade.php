@@ -4,11 +4,30 @@
             {{ __('Tambah Data Prestasi') }}
         </h2>
     </x-slot>
+    @if ($errors->any())
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg shadow-md">
+            <div class="flex items-center">
+                <svg class="w-6 h-6 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m0 0l-2 2m0 0l-2-2"></path>
+                </svg>
+                <span class="font-semibold">Oops! Ada beberapa kesalahan:</span>
+            </div>
+            <ul class="mt-2 pl-6 list-disc text-sm">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             {{-- Form Input Prestasi --}}
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <form>
+                <form action="{{ route('achievements.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <!-- Jenis Lomba -->
                     <div class="mb-4">
                         <label for="achievement_type"
@@ -16,8 +35,8 @@
                             Lomba</label>
                         <select id="achievement_type" name="achievement_type"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
-                            <option value="akademik">Akademik</option>
-                            <option value="non_akademik">Non Akademik</option>
+                            <option value="academic">Akademik</option>
+                            <option value="non_academic">Non Akademik</option>
                         </select>
                     </div>
 
@@ -27,9 +46,9 @@
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tingkat</label>
                         <select id="achievement_level" name="achievement_level"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
-                            <option value="provinsi">Provinsi</option>
-                            <option value="nasional">Nasional</option>
-                            <option value="internasional">Internasional</option>
+                            <option value="Provinsi">Provinsi</option>
+                            <option value="Nasional">Nasional</option>
+                            <option value="Internasional">Internasional</option>
                         </select>
                     </div>
 
@@ -40,8 +59,8 @@
                             Kepesertaan</label>
                         <select id="participation_type" name="participation_type"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
-                            <option value="individu">Individu</option>
-                            <option value="kelompok">Kelompok</option>
+                            <option value="Individu">Individu</option>
+                            <option value="Kelompok">Kelompok</option>
                         </select>
                     </div>
 
@@ -52,8 +71,8 @@
                             Pelaksanaan</label>
                         <select id="execution_model" name="execution_model"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
-                            <option value="daring">Daring</option>
-                            <option value="luring">Luring</option>
+                            <option value="Daring">Daring</option>
+                            <option value="Luring">Luring</option>
                         </select>
                     </div>
 
@@ -67,10 +86,10 @@
 
                     <!-- Jumlah Peserta -->
                     <div class="mb-4">
-                        <label for="participation_count"
+                        <label for="participant_count"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Jumlah
                             Peserta</label>
-                        <input type="number" id="participation_count" name="participation_count"
+                        <input type="number" id="participant_count" name="participant_count"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
                     </div>
 
@@ -81,13 +100,13 @@
                             Prestasi</label>
                         <select id="achievement_title" name="achievement_title"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
-                            <option value="juara1">Juara 1</option>
-                            <option value="juara2">Juara 2</option>
-                            <option value="juara3">Juara 3</option>
-                            <option value="harapan1">Harapan 1</option>
-                            <option value="harapan2">Harapan 2</option>
-                            <option value="harapan3">Harapan 3</option>
-                            <option value="peserta">Peserta</option>
+                            <option value="Juara 1">Juara 1</option>
+                            <option value="Juara 2">Juara 2</option>
+                            <option value="Juara 3">Juara 3</option>
+                            <option value="Harapan 1">Harapan 1</option>
+                            <option value="Harapan 2">Harapan 2</option>
+                            <option value="Harapan 3">Harapan 3</option>
+                            <option value="Peserta">Peserta</option>
                         </select>
                     </div>
 
@@ -127,13 +146,13 @@
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
                     </div>
 
-                    <!-- Foto Penyerahan Penghargaan (Upload) -->
+                    <!-- photo Penyerahan Penghargaan (Upload) -->
                     <div class="mb-4">
-                        <label for="award_foto_file"
+                        <label for="award_photo_file"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Foto
                             Penyerahan
                             Penghargaan <span class="text-gray-500">.jpg</span></label>
-                        <input type="file" id="award_foto_file" name="award_foto_file"
+                        <input type="file" id="award_photo_file" name="award_photo_file"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
                     </div>
 
@@ -163,9 +182,5 @@
                 </form>
             </div>
         </div>
-
     </div>
-    <!--
-    </div>
-
 </x-app-layout>
