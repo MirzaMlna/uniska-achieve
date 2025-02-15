@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
@@ -31,5 +32,6 @@ Route::middleware('auth')->group(function () {
 Route::post('/user/{id}/verify', [UserController::class, 'verify'])->name('user.verify');
 
 Route::resource('user', UserController::class);
+Route::resource('achievement', AchievementController::class)->middleware('auth');
 
 require __DIR__ . '/auth.php';
