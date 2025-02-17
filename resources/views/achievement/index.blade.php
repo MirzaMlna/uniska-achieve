@@ -1,12 +1,30 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Daftar Prestasi Mahasiswa') }}
+            {{ __('Daftar Prestasi Anda') }}
         </h2>
     </x-slot>
-
     <div class="py-12">
         <div class="mx-auto sm:px-6 lg:px-8">
+            <div class="flex space-x-4 mb-6">
+                <!-- Diverifikasi -->
+                <div class="flex-1 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md text-center">
+                    <div class="text-green-600 text-lg font-semibold">Diverifikasi</div>
+                    <div class="text-gray-900 dark:text-gray-100 text-2xl font-bold">{{ $verifiedCount }}</div>
+                </div>
+
+                <!-- Pending -->
+                <div class="flex-1 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md text-center">
+                    <div class="text-yellow-400 text-lg font-semibold">Pending</div>
+                    <div class="text-gray-900 dark:text-gray-100 text-2xl font-bold">{{ $pendingCount }}</div>
+                </div>
+
+                <!-- Ditolak -->
+                <div class="flex-1 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md text-center">
+                    <div class="text-red-600 text-lg font-semibold">Ditolak</div>
+                    <div class="text-gray-900 dark:text-gray-100 text-2xl font-bold">{{ $rejectedCount }}</div>
+                </div>
+            </div>
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
 
                 <!-- Pesan Sukses -->
@@ -16,13 +34,16 @@
                     </div>
                 @endif
 
+
                 <!-- Tombol Tambah -->
                 <div class="mb-4 flex justify-between">
                     <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300">Daftar Prestasi</h3>
-                    <a href="{{ route('achievements.create') }}"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        + Tambah Prestasi
-                    </a>
+                    @if (Auth::user()->role === 'student')
+                        <a href="{{ route('achievements.create') }}"
+                            class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded">
+                            + Tambah Prestasi
+                        </a>
+                    @endif
                 </div>
 
                 <!-- Tabel Prestasi -->
@@ -36,7 +57,7 @@
                                 <th class="border border-gray-300 px-4 py-2">Program Studi</th>
                                 <th class="border border-gray-300 px-4 py-2">Jenis Prestasi</th>
                                 <th class="border border-gray-300 px-4 py-2">Tingkat Prestasi</th>
-                                <th class="border border-gray-300 px-4 py-2">Judul Prestasi</th>
+                                <th class="border border-gray-300 px-4 py-2">Capaian Prestasi</th>
                                 <th class="border border-gray-300 px-4 py-2">Tanggal Kegiatan</th>
                                 <th class="border border-gray-300 px-4 py-2">Status</th>
                                 <th class="border border-gray-300 px-4 py-2">Aksi</th>
@@ -57,31 +78,83 @@
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2">{{ $achievement->start_date }} s/d
                                         {{ $achievement->end_date }}</td>
-                                    <td class="border border-gray-300 px-4 py-2">{{ ucfirst($achievement->status) }}
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        @switch($achievement->status)
+                                            @case('pending')
+                                                <span class="text-yellow-500 font-semibold">Tunda</span>
+                                            @break
+
+                                            @case('approved')
+                                                <span class="text-green-500 font-semibold">Diverifikasi</span>
+                                            @break
+
+                                            @case('rejected')
+                                                <span class="text-red-500 font-semibold">Ditolak</span>
+                                            @break
+
+                                            @default
+                                                <span>{{ ucfirst($achievement->status) }}</span>
+                                        @endswitch
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2 flex space-x-2">
                                         <!-- Tombol Selengkapnya -->
                                         <button onclick="openModal('modal-{{ $achievement->id }}')"
-                                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded">
-                                            🔍 Selengkapnya
+                                            class="bg-blue-700 hover:bg-blue-900 text-white py-1 px-3 rounded">
+                                            Selengkapnya
                                         </button>
 
-                                        <!-- Tombol Edit -->
-                                        <a href="{{ route('achievements.edit', $achievement->id) }}"
-                                            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded">
-                                            ✏️ Edit
-                                        </a>
+                                        @if (Auth::user()->role === 'admin')
+                                            <!-- Tombol Verifikasi/Tunda -->
+                                            <form action="{{ route('achievements.updateStatus', $achievement->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                @if ($achievement->status === 'approved')
+                                                    <!-- Jika status "Diverifikasi", tampilkan tombol "Tunda" -->
+                                                    <input type="hidden" name="status" value="pending">
+                                                    <button type="submit"
+                                                        class="bg-yellow-500 hover:bg-yellow-700 text-white py-1 px-3 rounded">
+                                                        Tunda
+                                                    </button>
+                                                @else
+                                                    <!-- Jika status bukan "Diverifikasi", tampilkan tombol "Verifikasi" -->
+                                                    <input type="hidden" name="status" value="approved">
+                                                    <button type="submit"
+                                                        class="bg-green-500 hover:bg-green-700 text-white py-1 px-3 rounded">
+                                                        Verifikasi
+                                                    </button>
+                                                @endif
+                                            </form>
 
-                                        <!-- Tombol Hapus -->
-                                        <form action="{{ route('achievements.destroy', $achievement->id) }}"
-                                            method="POST" onsubmit="return confirm('Yakin ingin menghapus?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">
-                                                🗑️ Hapus
-                                            </button>
-                                        </form>
+                                            <!-- Tombol Tolak -->
+                                            <form action="{{ route('achievements.updateStatus', $achievement->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="rejected">
+                                                <button type="submit"
+                                                    class="bg-red-500 hover:bg-red-700 text-white py-1 px-3 rounded">
+                                                    Tolak
+                                                </button>
+                                            </form>
+                                        @elseif (Auth::user()->role === 'student')
+                                            <!-- Tombol Edit -->
+                                            <a href="{{ route('achievements.edit', $achievement->id) }}"
+                                                class="bg-yellow-500 hover:bg-yellow-700 text-black py-1 px-3 rounded">
+                                                Edit
+                                            </a>
+
+                                            <!-- Tombol Hapus -->
+                                            <form action="{{ route('achievements.destroy', $achievement->id) }}"
+                                                method="POST" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="bg-red-700 hover:bg-red-900 text-white py-1 px-3 rounded">
+                                                    Hapus
+                                                </button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
 
@@ -136,7 +209,7 @@
                                                         @if ($achievement->certificate_file)
                                                             <a href="{{ asset('storage/' . $achievement->certificate_file) }}"
                                                                 target="_blank"
-                                                                class="text-blue-500 hover:underline">Unduh</a>
+                                                                class="text-blue-500 hover:underline">Tampilkan</a>
                                                         @else
                                                             -
                                                         @endif
@@ -145,7 +218,7 @@
                                                         @if ($achievement->award_photo_file)
                                                             <a href="{{ asset('storage/' . $achievement->award_photo_file) }}"
                                                                 target="_blank"
-                                                                class="text-blue-500 hover:underline">Unduh</a>
+                                                                class="text-blue-500 hover:underline">Tampilkan</a>
                                                         @else
                                                             -
                                                         @endif
@@ -154,7 +227,7 @@
                                                         @if ($achievement->student_assignment_letter)
                                                             <a href="{{ asset('storage/' . $achievement->student_assignment_letter) }}"
                                                                 target="_blank"
-                                                                class="text-blue-500 hover:underline">Unduh</a>
+                                                                class="text-blue-500 hover:underline">Tampilkan</a>
                                                         @else
                                                             -
                                                         @endif
@@ -163,7 +236,7 @@
                                                         @if ($achievement->supervisor_assignment_letter)
                                                             <a href="{{ asset('storage/' . $achievement->supervisor_assignment_letter) }}"
                                                                 target="_blank"
-                                                                class="text-blue-500 hover:underline">Unduh</a>
+                                                                class="text-blue-500 hover:underline">Tampilkan</a>
                                                         @else
                                                             -
                                                         @endif
@@ -180,30 +253,30 @@
                                         </div>
                                     </div>
                                 </div>
-                            @empty
-                                <tr>
-                                    <td colspan="10"
-                                        class="border border-gray-300 px-4 py-2 text-center text-gray-500 dark:text-gray-400">
-                                        Tidak ada prestasi yang ditemukan.
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+                                @empty
+                                    <tr>
+                                        <td colspan="10"
+                                            class="border border-gray-300 px-4 py-2 text-center text-gray-500 dark:text-gray-400">
+                                            Tidak ada prestasi yang ditemukan.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- JavaScript untuk Modal -->
-    <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-        }
+        <!-- JavaScript untuk Modal -->
+        <script>
+            function openModal(modalId) {
+                document.getElementById(modalId).classList.remove('hidden');
+            }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
-    </script>
-</x-app-layout>
+            function closeModal(modalId) {
+                document.getElementById(modalId).classList.add('hidden');
+            }
+        </script>
+    </x-app-layout>

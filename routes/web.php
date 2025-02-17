@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('users', UserController::class);
     Route::resource('achievements', AchievementController::class)->middleware('auth');
+    Route::patch('/achievements/{id}/update-status', [AchievementController::class, 'updateStatus'])
+        ->name('achievements.updateStatus');
 
 
     Route::post('/user/{id}/verify', [UserController::class, 'verify'])->name('user.verify');

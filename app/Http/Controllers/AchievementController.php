@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Achievement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class AchievementController extends Controller
@@ -13,8 +14,23 @@ class AchievementController extends Controller
      */
     public function index()
     {
-        $achievements = Achievement::where('student_id', auth()->id())->get();
-        return view('achievement.index', compact('achievements'));
+        // Cek role pengguna
+        if (Auth::user()->role === 'student') {
+            // Jika role student, tampilkan hanya prestasi yang dimiliki oleh student tersebut
+            $achievements = Achievement::where('student_id', Auth::id())->get();
+            $verifiedCount = Achievement::where('student_id', Auth::id())->where('status', 'approved')->count();
+            $pendingCount = Achievement::where('student_id', Auth::id())->where('status', 'pending')->count();
+            $rejectedCount = Achievement::where('student_id', Auth::id())->where('status', 'rejected')->count();
+        } else {
+            // Jika role admin, tampilkan semua prestasi
+            $achievements = Achievement::all();
+            $verifiedCount = Achievement::where('status', 'approved')->count();
+            $pendingCount = Achievement::where('status', 'pending')->count();
+            $rejectedCount = Achievement::where('status', 'rejected')->count();
+        }
+
+        // Kirim semua variabel ke view
+        return view('achievement.index', compact('achievements', 'verifiedCount', 'pendingCount', 'rejectedCount'));
     }
 
     /**
@@ -102,5 +118,21 @@ class AchievementController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $achievement = Achievement::findOrFail($id);
+
+        // Validasi input status
+        $request->validate([
+            'status' => 'required|in:pending,approved,rejected',
+        ]);
+
+        // Update status
+        $achievement->status = $request->status;
+        $achievement->save();
+
+        return redirect()->route('achievements.index')->with('success', 'Status prestasi berhasil diperbarui.');
     }
 }

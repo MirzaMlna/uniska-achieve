@@ -46,7 +46,7 @@ class UserController extends Controller
             'email_verified_at' => null, // Default belum diverifikasi
         ]);
 
-        return redirect()->route('user.index')->with('success', 'Pengguna berhasil ditambahkan.');
+        return redirect()->route('users.index')->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
     /**
@@ -74,7 +74,7 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
 
-        return redirect()->route('user.index')->with('success', 'Data pengguna berhasil diperbarui.');
+        return redirect()->route('users.index')->with('success', 'Data pengguna berhasil diperbarui.');
     }
 
     /**
@@ -83,7 +83,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('user.index')->with('success', 'Pengguna berhasil dihapus.');
+        return redirect()->route('users.index')->with('success', 'Pengguna berhasil dihapus.');
     }
 
     /**
@@ -95,6 +95,6 @@ class UserController extends Controller
         $user->update([
             'is_approved' => !$user->is_approved,
         ]);
-        return redirect()->route('user.index')->with('success', 'Status verifikasi berhasil diperbarui.');
+        return redirect()->route('users.index')->with('success', 'Status verifikasi berhasil diperbarui.');
     }
 }

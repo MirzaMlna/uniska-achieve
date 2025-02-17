@@ -55,7 +55,7 @@
                                             </svg>
                                         </button>
                                         <form id="delete-form-{{ $user->id }}"
-                                            action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                            action="{{ route('users.destroy', $user->id) }}" method="POST"
                                             style="display: none;">
                                             @csrf
                                             @method('DELETE')
