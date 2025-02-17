@@ -35,7 +35,7 @@
                                     @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    {{ $user->created_at->translatedFormat('d-m-Y') }}
+                                    {{ $user->created_at->translatedFormat('d F Y') }}
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2  flex items-end justify-end">
                                     <div class="flex items-center space-x-2">

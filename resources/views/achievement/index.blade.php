@@ -78,7 +78,7 @@
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2">
                                         {{ \Carbon\Carbon::parse($achievement->start_date)->translatedFormat('d F Y') }}
-                                        s/d
+                                        <span class="text-gray-500">s/d</span>
                                         {{ \Carbon\Carbon::parse($achievement->end_date)->translatedFormat('d F Y') }}
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2">
