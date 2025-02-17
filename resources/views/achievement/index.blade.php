@@ -76,8 +76,11 @@
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2">{{ $achievement->achievement_title }}
                                     </td>
-                                    <td class="border border-gray-300 px-4 py-2">{{ $achievement->start_date }} s/d
-                                        {{ $achievement->end_date }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        {{ \Carbon\Carbon::parse($achievement->start_date)->translatedFormat('d F Y') }}
+                                        s/d
+                                        {{ \Carbon\Carbon::parse($achievement->end_date)->translatedFormat('d F Y') }}
+                                    </td>
                                     <td class="border border-gray-300 px-4 py-2">
                                         @switch($achievement->status)
                                             @case('pending')
@@ -96,66 +99,70 @@
                                                 <span>{{ ucfirst($achievement->status) }}</span>
                                         @endswitch
                                     </td>
-                                    <td class="border border-gray-300 px-4 py-2 flex space-x-2">
-                                        <!-- Tombol Selengkapnya -->
-                                        <button onclick="openModal('modal-{{ $achievement->id }}')"
-                                            class="bg-blue-700 hover:bg-blue-900 text-white py-1 px-3 rounded">
-                                            Selengkapnya
-                                        </button>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="flex flex-col space-y-2 w-full">
+                                            <!-- Tombol Selengkapnya -->
+                                            <button onclick="openModal('modal-{{ $achievement->id }}')"
+                                                class="bg-blue-700 hover:bg-blue-900 text-white py-1 px-3 rounded w-full">
+                                                Selengkapnya
+                                            </button>
 
-                                        @if (Auth::user()->role === 'admin')
-                                            <!-- Tombol Verifikasi/Tunda -->
-                                            <form action="{{ route('achievements.updateStatus', $achievement->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                @if ($achievement->status === 'approved')
-                                                    <!-- Jika status "Diverifikasi", tampilkan tombol "Tunda" -->
-                                                    <input type="hidden" name="status" value="pending">
+                                            @if (Auth::user()->role === 'admin')
+                                                <!-- Tombol Verifikasi/Tunda -->
+                                                <form
+                                                    action="{{ route('achievements.updateStatus', $achievement->id) }}"
+                                                    method="POST" class="w-full">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    @if ($achievement->status === 'approved')
+                                                        <input type="hidden" name="status" value="pending">
+                                                        <button type="submit"
+                                                            class="bg-yellow-500 hover:bg-yellow-700 text-white py-1 px-3 rounded w-full">
+                                                            Tunda
+                                                        </button>
+                                                    @else
+                                                        <input type="hidden" name="status" value="approved">
+                                                        <button type="submit"
+                                                            class="bg-green-500 hover:bg-green-700 text-white py-1 px-3 rounded w-full">
+                                                            Verifikasi
+                                                        </button>
+                                                    @endif
+                                                </form>
+
+                                                <!-- Tombol Tolak -->
+                                                <form
+                                                    action="{{ route('achievements.updateStatus', $achievement->id) }}"
+                                                    method="POST" class="w-full">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <input type="hidden" name="status" value="rejected">
                                                     <button type="submit"
-                                                        class="bg-yellow-500 hover:bg-yellow-700 text-white py-1 px-3 rounded">
-                                                        Tunda
+                                                        class="bg-red-500 hover:bg-red-700 text-white py-1 px-3 rounded w-full">
+                                                        Tolak
                                                     </button>
-                                                @else
-                                                    <!-- Jika status bukan "Diverifikasi", tampilkan tombol "Verifikasi" -->
-                                                    <input type="hidden" name="status" value="approved">
+                                                </form>
+                                            @elseif (Auth::user()->role === 'student')
+                                                <!-- Tombol Edit -->
+                                                <a href="{{ route('achievements.edit', $achievement->id) }}"
+                                                    class="bg-yellow-500 hover:bg-yellow-700 text-black py-1 px-3 rounded text-center w-full">
+                                                    Edit
+                                                </a>
+
+                                                <!-- Tombol Hapus -->
+                                                <form action="{{ route('achievements.destroy', $achievement->id) }}"
+                                                    method="POST" onsubmit="return confirm('Yakin ingin menghapus?')"
+                                                    class="w-full">
+                                                    @csrf
+                                                    @method('DELETE')
                                                     <button type="submit"
-                                                        class="bg-green-500 hover:bg-green-700 text-white py-1 px-3 rounded">
-                                                        Verifikasi
+                                                        class="bg-red-700 hover:bg-red-900 text-white py-1 px-3 rounded w-full">
+                                                        Hapus
                                                     </button>
-                                                @endif
-                                            </form>
-
-                                            <!-- Tombol Tolak -->
-                                            <form action="{{ route('achievements.updateStatus', $achievement->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <input type="hidden" name="status" value="rejected">
-                                                <button type="submit"
-                                                    class="bg-red-500 hover:bg-red-700 text-white py-1 px-3 rounded">
-                                                    Tolak
-                                                </button>
-                                            </form>
-                                        @elseif (Auth::user()->role === 'student')
-                                            <!-- Tombol Edit -->
-                                            <a href="{{ route('achievements.edit', $achievement->id) }}"
-                                                class="bg-yellow-500 hover:bg-yellow-700 text-black py-1 px-3 rounded">
-                                                Edit
-                                            </a>
-
-                                            <!-- Tombol Hapus -->
-                                            <form action="{{ route('achievements.destroy', $achievement->id) }}"
-                                                method="POST" onsubmit="return confirm('Yakin ingin menghapus?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="bg-red-700 hover:bg-red-900 text-white py-1 px-3 rounded">
-                                                    Hapus
-                                                </button>
-                                            </form>
-                                        @endif
+                                                </form>
+                                            @endif
+                                        </div>
                                     </td>
+
                                 </tr>
 
                                 <!-- Modal untuk Detail Prestasi -->
