@@ -13,6 +13,9 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Beranda') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('achievements.index')" :active="request()->routeIs('achievements.index')">
+                        {{ __('Data Prestasi') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                         {{ __('Data Pengguna') }}
                     </x-nav-link>
