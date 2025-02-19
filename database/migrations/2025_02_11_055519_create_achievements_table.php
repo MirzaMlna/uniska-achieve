@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nim', 50); // NIM mahasiswa
             $table->string('name', 255); // Nama mahasiswa
             $table->string('study_program', 255); // Program studi mahasiswa
-            $table->enum('achievement_type', ['academic', 'non_academic']);
+            $table->enum('achievement_type', ['Akademik', 'Non Akademik']);
             $table->string('achievement_level', 100);
             $table->string('participation_type', 100);
             $table->string('execution_model', 100);

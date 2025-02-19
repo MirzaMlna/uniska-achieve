@@ -82,18 +82,31 @@
                                         <select name="filter[achievement_type]"
                                             class="px-2 py-1 pr-8 border rounded appearance-none">
                                             <option value="">Semua</option>
-                                            <option value="akademik"
-                                                {{ request('filter.achievement_type') == 'academic' ? 'selected' : '' }}>
+                                            <option value="Akademik"
+                                                {{ request('filter.achievement_type') == 'Akademik' ? 'selected' : '' }}>
                                                 Akademik</option>
-                                            <option value="non-akademik"
-                                                {{ request('filter.achievement_type') == 'non-academic' ? 'selected' : '' }}>
-                                                Non-Akademik</option>
+                                            <option value="Non Akademik"
+                                                {{ request('filter.achievement_type') == 'Non Akademik' ? 'selected' : '' }}>
+                                                Non Akademik</option>
                                         </select>
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2 text-gray-800">
-                                        <input type="text" name="filter[achievement_level]"
-                                            value="{{ request('filter.achievement_level') }}"
-                                            class="w-full px-2 py-1 border rounded" placeholder="Filter Tinigkatan">
+                                        <select name="filter[achievement_level]"
+                                            class="px-2 py-1 pr-8 border rounded appearance-none">
+                                            <option value="">Semua</option>
+                                            <option value="Internasional"
+                                                {{ request('filter.achievement_level') == 'Internasional' ? 'selected' : '' }}>
+                                                Internasional</option>
+                                            <option value="Nasional"
+                                                {{ request('filter.achievement_level') == 'Nasional' ? 'selected' : '' }}>
+                                                Nasional</option>
+                                            <option value="Provinsi"
+                                                {{ request('filter.achievement_level') == 'Provinsi' ? 'selected' : '' }}>
+                                                Provinsi</option>
+                                            <option value="Wilayah"
+                                                {{ request('filter.achievement_level') == 'Wilayah' ? 'selected' : '' }}>
+                                                Wilayah</option>
+                                        </select>
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2 text-gray-800">
                                         <select name="filter[achievement_title]"

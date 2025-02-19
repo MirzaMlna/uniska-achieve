@@ -35,8 +35,9 @@
                             Lomba</label>
                         <select id="achievement_type" name="achievement_type"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
-                            <option value="academic">Akademik</option>
-                            <option value="non_academic">Non Akademik</option>
+                            <option value="">Pilih Jenis Kegiatan</option>
+                            <option value="Akademik">Akademik</option>
+                            <option value="Non Akademik">Non Akademik</option>
                         </select>
                     </div>
 
@@ -46,6 +47,8 @@
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tingkat</label>
                         <select id="achievement_level" name="achievement_level"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+                            <option value="">Pilih Tingkatan Kegiatan</option>
+                            <option value="Wilayah">Wilayah</option>
                             <option value="Provinsi">Provinsi</option>
                             <option value="Nasional">Nasional</option>
                             <option value="Internasional">Internasional</option>
@@ -59,6 +62,7 @@
                             Kepesertaan</label>
                         <select id="participation_type" name="participation_type"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+                            <option value="">Pilih Jenis Kepesertaan</option>
                             <option value="Individu">Individu</option>
                             <option value="Kelompok">Kelompok</option>
                         </select>
@@ -71,6 +75,7 @@
                             Pelaksanaan</label>
                         <select id="execution_model" name="execution_model"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+                            <option value="">Pilih Model Pelaksanaan</option>
                             <option value="Daring">Daring</option>
                             <option value="Luring">Luring</option>
                         </select>
@@ -100,6 +105,7 @@
                             Prestasi</label>
                         <select id="achievement_title" name="achievement_title"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+                            <option value="">Pilih Capaian Prestasi</option>
                             <option value="Juara 1">Juara 1</option>
                             <option value="Juara 2">Juara 2</option>
                             <option value="Juara 3">Juara 3</option>
