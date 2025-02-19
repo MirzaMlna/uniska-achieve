@@ -57,14 +57,20 @@ class AchievementController extends Controller
             if (!empty($filters['achievement_title'])) {
                 $query->where('achievement_title', 'like', '%' . $filters['achievement_title'] . '%');
             }
-
             if (!empty($filters['start_year'])) {
-                $query->whereYear('start_date', '>=', $filters['start_year']);
+                $query->whereYear('start_date', '=', $filters['start_year']);
             }
+
+            // dd($query->toSql(), $query->getBindings());
+
 
             if (!empty($filters['status'])) {
                 $query->where('status', $filters['status']);
             }
+        }
+
+        if (Auth::user()->role === 'student') {
+            $query->where('student_id', Auth::id());
         }
 
         $achievements = $query->get();
