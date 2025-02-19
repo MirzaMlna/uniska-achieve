@@ -12,7 +12,7 @@ class AchievementController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         // Cek role pengguna
         if (Auth::user()->role === 'student') {
@@ -29,9 +29,54 @@ class AchievementController extends Controller
             $rejectedCount = Achievement::where('status', 'rejected')->count();
         }
 
+        $query = Achievement::query();
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (!empty($filters['nim'])) {
+                $query->where('nim', 'like', '%' . $filters['nim'] . '%');
+            }
+
+            if (!empty($filters['name'])) {
+                $query->where('name', 'like', '%' . $filters['name'] . '%');
+            }
+
+            if (!empty($filters['study_program'])) {
+                $query->where('study_program', 'like', '%' . $filters['study_program'] . '%');
+            }
+
+            if (!empty($filters['achievement_type'])) {
+                $query->where('achievement_type', $filters['achievement_type']);
+            }
+
+            if (!empty($filters['achievement_level'])) {
+                $query->where('achievement_level', 'like', '%' . $filters['achievement_level'] . '%');
+            }
+
+            if (!empty($filters['achievement_title'])) {
+                $query->where('achievement_title', 'like', '%' . $filters['achievement_title'] . '%');
+            }
+
+            if (!empty($filters['start_year'])) {
+                $query->whereYear('start_date', '>=', $filters['start_year']);
+            }
+
+            if (!empty($filters['status'])) {
+                $query->where('status', $filters['status']);
+            }
+        }
+
+        $achievements = $query->get();
+
+        $verifiedCount = Achievement::where('status', 'approved')->count();
+        $pendingCount = Achievement::where('status', 'pending')->count();
+        $rejectedCount = Achievement::where('status', 'rejected')->count();
+
         // Kirim semua variabel ke view
         return view('achievement.index', compact('achievements', 'verifiedCount', 'pendingCount', 'rejectedCount'));
     }
+
 
     /**
      * Show the form for creating a new resource.

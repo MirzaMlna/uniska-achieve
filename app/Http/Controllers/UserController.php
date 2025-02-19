@@ -12,9 +12,29 @@ class UserController extends Controller
     /**
      * Menampilkan daftar pengguna.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('created_at', 'desc')->get();
+
+        $query = User::query();
+
+        // Filter berdasarkan nama
+        if ($request->has('nim') && $request->nim != '') {
+            $query->where('nim', 'like', '%' . $request->nim . '%');
+        }
+
+        // Filter berdasarkan program studi
+        if ($request->has('study_program') && $request->study_program != '') {
+            $query->where('study_program', 'like', '%' . $request->study_program . '%');
+        }
+
+        // Filter berdasarkan status verifikasi
+        if ($request->has('is_approved') && $request->is_approved != '') {
+            $query->where('is_approved', $request->is_approved);
+        }
+
+        // Mengambil data pengguna dengan hasil filter
+        $users = $query->paginate(10);  // Menggunakan pagination agar tidak terlalu banyak data ditampilkan sekaligus
+
         return view('user.index', compact('users'));
     }
 
