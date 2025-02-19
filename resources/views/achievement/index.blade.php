@@ -267,7 +267,7 @@
                                                     method="POST" onsubmit="return confirm('Yakin ingin menghapus?')"
                                                     class="w-full">
                                                     @csrf
-                                                    @method('DELETE')
+                                                    <input type="hidden" name="_method" value="DELETE">
                                                     <button type="submit"
                                                         class="bg-red-700 hover:bg-red-900 text-white py-1 px-3 rounded w-full">
                                                         Hapus

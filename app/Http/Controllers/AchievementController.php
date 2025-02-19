@@ -166,9 +166,14 @@ class AchievementController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Achievement $achievement)
     {
-        //
+        try {
+            $achievement->delete();
+            return redirect()->route('achievements.index')->with('success', 'Data Prestasi berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->route('achievements.index')->with('error', 'Gagal menghapus data prestasi.');
+        }
     }
 
     public function updateStatus(Request $request, $id)
