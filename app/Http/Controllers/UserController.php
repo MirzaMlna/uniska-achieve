@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -14,17 +15,31 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        // Menghitung jumlah pengguna yang sudah diverifikasi
+        $verifiedCount = User::where('is_approved', true)->count();
+
+        // Menghitung jumlah pengguna yang belum diverifikasi
+        $unverifiedCount = User::where('is_approved', false)->count();
 
         $query = User::query();
 
-        // Filter berdasarkan nama
+        // Filter berdasarkan NIM
         if ($request->has('nim') && $request->nim != '') {
             $query->where('nim', 'like', '%' . $request->nim . '%');
+        }
+        // Filter berdasarkan Nama
+        if ($request->has('name') && $request->name != '') {
+            $query->where('name', 'like', '%' . $request->name . '%');
         }
 
         // Filter berdasarkan program studi
         if ($request->has('study_program') && $request->study_program != '') {
             $query->where('study_program', 'like', '%' . $request->study_program . '%');
+        }
+
+        // Filter berdasarkan Role
+        if ($request->has('role') && $request->role != '') {
+            $query->where('role', $request->role);
         }
 
         // Filter berdasarkan status verifikasi
@@ -33,10 +48,11 @@ class UserController extends Controller
         }
 
         // Mengambil data pengguna dengan hasil filter
-        $users = $query->paginate(10);  // Menggunakan pagination agar tidak terlalu banyak data ditampilkan sekaligus
+        $users = $query->paginate(10);
 
-        return view('user.index', compact('users'));
+        return view('user.index', compact('users', 'verifiedCount', 'unverifiedCount'));
     }
+
 
     /**
      * Menampilkan form tambah pengguna.

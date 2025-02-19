@@ -9,83 +9,135 @@
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Card Statistik Verifikasi -->
+            <div class="flex space-x-4 mb-6">
+                <div class="flex-1 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md text-center">
+                    <div class="text-green-600 text-lg font-semibold">Diverifikasi</div>
+                    <div class="text-gray-900 dark:text-gray-100 text-2xl font-bold">{{ $verifiedCount }}</div>
+                </div>
+                <div class="flex-1 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md text-center">
+                    <div class="text-yellow-400 text-lg font-semibold">Belum Diverifikasi</div>
+                    <div class="text-gray-900 dark:text-gray-100 text-2xl font-bold">{{ $unverifiedCount }}</div>
+                </div>
+            </div>
+
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
-                <!-- Filter Form -->
-                <form method="GET" action="{{ route('users.index') }}" class="mb-4 flex space-x-4">
-                    <input type="text" name="nim" placeholder="Cari NIM" class="px-2 py-1 border rounded"
-                        value="{{ request('nim') }}">
-                    <input type="text" name="study_program" placeholder="Filter Program Studi"
-                        class="px-2 py-1 border rounded" value="{{ request('study_program') }}">
-                    <select name="is_approved" class="px-2 py-1 pr-8 border rounded appearance-none">
-                        <option value="">Filter Verifikasi</option>
-                        <option value="1" {{ request('is_approved') == '1' ? 'selected' : '' }}>Sudah</option>
-                        <option value="0" {{ request('is_approved') == '0' ? 'selected' : '' }}>Belum</option>
-                    </select>
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Filter</button>
-                </form>
-
-                <!-- Tabel Data Pengguna -->
-                <table class="w-full border-collapse border border-gray-300 dark:border-gray-600">
-                    <thead>
-                        <tr class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white text-start">
-                            <th class="border border-gray-300 px-4 py-2 text-start">NIM</th>
-                            <th class="border border-gray-300 px-4 py-2 text-start">Nama</th>
-                            <th class="border border-gray-300 px-4 py-2 text-start">Program Studi</th>
-                            <th class="border border-gray-300 px-4 py-2 text-start">Role</th>
-                            <th class="border border-gray-300 px-4 py-2 text-center">Verifikasi</th>
-                            <th class="border border-gray-300 px-4 py-2 text-start">Mendaftar Pada</th>
-                            <th class="border border-gray-300 px-4 py-2 text-start" rowspan="2">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($users as $user)
-                            <tr class="text-gray-800 dark:text-gray-200">
-                                <td class="border border-gray-300 px-4 py-2">{{ $user->nim }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ $user->name }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ $user->study_program }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ ucfirst($user->role) }}</td>
-                                <td class="border border-gray-300 px-4 py-2 text-center">
-                                    @if ($user->is_approved)
-                                        <span class="px-3 py-1 text-green-500 rounded-lg">Sudah</span>
-                                    @else
-                                        <span class="px-3 py-1 text-red-500 rounded-lg">Belum</span>
-                                    @endif
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    {{ $user->created_at->translatedFormat('d F Y') }}
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2 flex items-end justify-end">
-                                    <div class="flex flex-col items-center space-y-2 w-full">
-                                        <form action="{{ route('user.verify', $user->id) }}" method="POST"
-                                            class="w-full">
-                                            @csrf
-                                            <button type="submit"
-                                                class="{{ $user->is_approved ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700' }} w-full text-white py-1 px-3 rounded-lg">
-                                                {{ $user->is_approved ? 'Hapus Verifikasi' : 'Verifikasi' }}
-                                            </button>
-                                        </form>
-                                        <button onclick="confirmDelete({{ $user->id }})"
-                                            class="w-full px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700">
-                                            Hapus
+                <!-- Tabel Data Pengguna dengan Filter -->
+                <div class="overflow-x-auto">
+                    <form method="GET" action="{{ route('users.index') }}">
+                        <table class="w-full border-collapse border border-gray-300 dark:border-gray-600">
+                            <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white">
+                                <tr>
+                                    <th class="border border-gray-300 px-4 py-2 text-start">NIM</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-start">Nama</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-start">Program Studi</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-start">Role</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center">Verifikasi</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-start">Mendaftar Pada</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-start">Aksi</th>
+                                </tr>
+                                <!-- Baris Filter -->
+                                <tr>
+                                    <td class="border border-gray-300 px-4 py-2 text-gray-700">
+                                        <input type="text" name="nim" placeholder="Filter NIM"
+                                            class="w-full px-2 py-1 border rounded" value="{{ request('nim') }}">
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2 text-gray-700">
+                                        <input type="text" name="name" placeholder="Filter Nama"
+                                            class="w-full px-2 py-1 border rounded" value="{{ request('name') }}">
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2 text-gray-700">
+                                        <input type="text" name="study_program" placeholder="Filter Prodi"
+                                            class="w-full px-2 py-1 border rounded"
+                                            value="{{ request('study_program') }}">
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2 text-gray-700 ">
+                                        <select name="role"
+                                            class="w-full px-2 py-1 pr-8 border rounded appearance-none">
+                                            <option value="">Semua</option>
+                                            <option value="Admin" {{ request('role') == 'Admin' ? 'selected' : '' }}>
+                                                Admin</option>
+                                            <option value="Student"
+                                                {{ request('role') == 'Student' ? 'selected' : '' }}>Mahasiswa</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2 text-gray-700">
+                                        <select name="is_approved"
+                                            class="w-full px-2 py-1 pr-8 border rounded appearance-none">
+                                            <option value="">Semua</option>
+                                            <option value="1"
+                                                {{ request('is_approved') == '1' ? 'selected' : '' }}>Sudah</option>
+                                            <option value="0"
+                                                {{ request('is_approved') == '0' ? 'selected' : '' }}>Belum</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2"></td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <button type="submit"
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded w-full">
+                                            Filter
                                         </button>
-                                        <form id="delete-form-{{ $user->id }}"
-                                            action="{{ route('users.destroy', $user->id) }}" method="POST"
-                                            style="display: none;">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
-                                    </div>
+                                        <a href="{{ route('users.index') }}"
+                                            class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-4 rounded w-full block mt-1 text-center">
+                                            Reset
+                                        </a>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($users as $user)
+                                    <tr class="text-gray-800 dark:text-gray-200">
+                                        <td class="border border-gray-300 px-4 py-2">{{ $user->nim }}</td>
+                                        <td class="border border-gray-300 px-4 py-2">{{ $user->name }}</td>
+                                        <td class="border border-gray-300 px-4 py-2">{{ $user->study_program }}</td>
+                                        <td class="border border-gray-300 px-4 py-2">{{ ucfirst($user->role) }}</td>
+                                        <td class="border border-gray-300 px-4 py-2 text-center">
+                                            @if ($user->is_approved)
+                                                <span class="px-3 py-1 text-green-500 rounded-lg">Sudah</span>
+                                            @else
+                                                <span class="px-3 py-1 text-red-500 rounded-lg">Belum</span>
+                                            @endif
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            {{ $user->created_at->translatedFormat('d F Y') }}
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2 flex items-end justify-end">
+                                            <div class="flex flex-col items-center space-y-2 w-full">
+                                                <form action="{{ route('user.verify', $user->id) }}" method="POST"
+                                                    class="w-full">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="{{ $user->is_approved ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700' }} w-full text-white py-1 px-3 rounded-lg">
+                                                        {{ $user->is_approved ? 'Hapus Verifikasi' : 'Verifikasi' }}
+                                                    </button>
+                                                </form>
+                                                <button onclick="confirmDelete({{ $user->id }})"
+                                                    class="w-full px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700">
+                                                    Hapus
+                                                </button>
+                                                <form id="delete-form-{{ $user->id }}"
+                                                    action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                                    style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
 
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
                 @if ($users->isEmpty())
                     <p class="text-center text-gray-500 mt-4">Tidak ada pengguna yang terdaftar.</p>
                 @endif
+
                 <!-- Pagination -->
-                {{ $users->links() }}
+                <div class="mt-5">
+                    {{ $users->links() }}
+                </div>
             </div>
         </div>
     </div>
