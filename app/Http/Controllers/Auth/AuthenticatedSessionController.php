@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('not_approved');
         }
 
-        return redirect()->intended(route('home', absolute: false));
+        return redirect()->intended(route('achievements', absolute: false));
     }
 
     /**
