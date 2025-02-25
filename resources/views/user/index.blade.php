@@ -8,7 +8,7 @@
     <x-auth-session-status class="mb-4 text-center" :status="session('status')" />
 
     <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="sm:px-6 lg:px-8">
             <!-- Card Statistik Verifikasi -->
             <div class="flex space-x-4 mb-6">
                 <div class="flex-1 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md text-center">
@@ -16,7 +16,7 @@
                     <div class="text-gray-900 dark:text-gray-100 text-2xl font-bold">{{ $verifiedCount }}</div>
                 </div>
                 <div class="flex-1 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md text-center">
-                    <div class="text-yellow-400 text-lg font-semibold">Belum Diverifikasi</div>
+                    <div class="text-red-400 text-lg font-semibold">Belum Diverifikasi</div>
                     <div class="text-gray-900 dark:text-gray-100 text-2xl font-bold">{{ $unverifiedCount }}</div>
                 </div>
             </div>
@@ -111,10 +111,18 @@
                                                         {{ $user->is_approved ? 'Hapus Verifikasi' : 'Verifikasi' }}
                                                     </button>
                                                 </form>
+                                                <form id="delete-form-{{ $user->id }}"
+                                                    action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                                    style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+
                                                 <button onclick="confirmDelete({{ $user->id }})"
                                                     class="w-full px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700">
                                                     Hapus
                                                 </button>
+
                                                 <form id="delete-form-{{ $user->id }}"
                                                     action="{{ route('users.destroy', $user->id) }}" method="POST"
                                                     style="display: none;">

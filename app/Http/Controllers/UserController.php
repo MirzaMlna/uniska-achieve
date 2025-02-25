@@ -48,9 +48,11 @@ class UserController extends Controller
         }
 
         // Mengambil data pengguna dengan hasil filter
-        $users = $query->paginate(10);
+        $sortOrder = $request->get('sort', 'desc');
+        $users = User::orderBy('created_at', $sortOrder)->paginate(10);
 
-        return view('user.index', compact('users', 'verifiedCount', 'unverifiedCount'));
+
+        return view('user.index', compact('users', 'verifiedCount', 'unverifiedCount', 'sortOrder'));
     }
 
 
