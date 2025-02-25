@@ -128,7 +128,7 @@
                                                     @method('DELETE')
                                                 </form>
 
-                                                <button onclick="confirmDelete({{ $user->id }})"
+                                                <button type="button" onclick="confirmDelete({{ $user->id }})"
                                                     class="w-full px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700">
                                                     Hapus
                                                 </button>

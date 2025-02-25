@@ -122,11 +122,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
         if ($user->delete()) {
             return redirect()->route('users.index')->with('success', 'Pengguna berhasil dihapus.');
         } else {
-            return redirect()->route('users.index')->with('error', 'Gagal');
+            return redirect()->route('users.index')->with('error', 'Gagal menghapus pengguna.');
         }
     }
 
