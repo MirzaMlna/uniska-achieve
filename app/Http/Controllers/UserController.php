@@ -15,10 +15,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        // Menghitung jumlah pengguna yang sudah diverifikasi
+        // Menghitung jumlah pengguna yang sudah dan belum diverifikasi
         $verifiedCount = User::where('is_approved', true)->count();
-
-        // Menghitung jumlah pengguna yang belum diverifikasi
         $unverifiedCount = User::where('is_approved', false)->count();
 
         $query = User::query();
@@ -27,6 +25,7 @@ class UserController extends Controller
         if ($request->has('nim') && $request->nim != '') {
             $query->where('nim', 'like', '%' . $request->nim . '%');
         }
+
         // Filter berdasarkan Nama
         if ($request->has('name') && $request->name != '') {
             $query->where('name', 'like', '%' . $request->name . '%');
@@ -47,13 +46,16 @@ class UserController extends Controller
             $query->where('is_approved', $request->is_approved);
         }
 
-        // Mengambil data pengguna dengan hasil filter
-        $sortOrder = $request->get('sort', 'desc');
-        $users = User::orderBy('created_at', $sortOrder)->paginate(10);
+        // **Sorting berdasarkan tanggal mendaftar**
+        $sortOrder = $request->get('sort', 'desc'); // Default ke descending
+        $query->orderBy('created_at', $sortOrder);
 
+        // Mengambil data pengguna dengan hasil filter dan sorting
+        $users = $query->paginate(10);
 
         return view('user.index', compact('users', 'verifiedCount', 'unverifiedCount', 'sortOrder'));
     }
+
 
 
     /**

@@ -71,7 +71,17 @@
                                                 {{ request('is_approved') == '0' ? 'selected' : '' }}>Belum</option>
                                         </select>
                                     </td>
-                                    <td class="border border-gray-300 px-4 py-2"></td>
+                                    <td class="border border-gray-300 px-4 py-2 text-gray-700">
+                                        <a href="{{ route('users.index', array_merge(request()->query(), ['sort' => request('sort') == 'asc' ? 'desc' : 'asc'])) }}"
+                                            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">
+                                            Urutkan dari
+                                            @if (request('sort') == 'asc')
+                                                Terbaru
+                                            @else
+                                                Terdahulu
+                                            @endif
+                                        </a>
+                                    </td>
                                     <td class="border border-gray-300 px-4 py-2">
                                         <button type="submit"
                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded w-full">
