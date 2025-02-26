@@ -15,44 +15,56 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        // Validasi input request
+        $request->validate([
+            'nim' => 'nullable|string',
+            'name' => 'nullable|string',
+            'study_program' => 'nullable|string',
+            'role' => 'nullable|string|in:Admin,Student', // Sesuaikan dengan role yang valid
+            'is_approved' => 'nullable|boolean',
+            'sort' => 'nullable|in:asc,desc', // Pastikan hanya menerima 'asc' atau 'desc'
+        ]);
+
         // Menghitung jumlah pengguna yang sudah dan belum diverifikasi
         $verifiedCount = User::where('is_approved', true)->count();
         $unverifiedCount = User::where('is_approved', false)->count();
 
+        // Query dasar
         $query = User::query();
 
         // Filter berdasarkan NIM
-        if ($request->has('nim') && $request->nim != '') {
-            $query->where('nim', 'like', '%' . $request->nim . '%');
-        }
+        $query->when($request->filled('nim'), function ($q) use ($request) {
+            $q->where('nim', 'like', '%' . $request->nim . '%');
+        });
 
         // Filter berdasarkan Nama
-        if ($request->has('name') && $request->name != '') {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
+        $query->when($request->filled('name'), function ($q) use ($request) {
+            $q->where('name', 'like', '%' . $request->name . '%');
+        });
 
         // Filter berdasarkan program studi
-        if ($request->has('study_program') && $request->study_program != '') {
-            $query->where('study_program', 'like', '%' . $request->study_program . '%');
-        }
+        $query->when($request->filled('study_program'), function ($q) use ($request) {
+            $q->where('study_program', 'like', '%' . $request->study_program . '%');
+        });
 
         // Filter berdasarkan Role
-        if ($request->has('role') && $request->role != '') {
-            $query->where('role', $request->role);
-        }
+        $query->when($request->filled('role'), function ($q) use ($request) {
+            $q->where('role', $request->role);
+        });
 
         // Filter berdasarkan status verifikasi
-        if ($request->has('is_approved') && $request->is_approved != '') {
-            $query->where('is_approved', $request->is_approved);
-        }
+        $query->when($request->filled('is_approved'), function ($q) use ($request) {
+            $q->where('is_approved', $request->is_approved);
+        });
 
-        // **Sorting berdasarkan tanggal mendaftar**
+        // Sorting berdasarkan tanggal mendaftar
         $sortOrder = $request->get('sort', 'desc'); // Default ke descending
         $query->orderBy('created_at', $sortOrder);
 
         // Mengambil data pengguna dengan hasil filter dan sorting
         $users = $query->paginate(10);
 
+        // Mengirim data ke view
         return view('user.index', compact('users', 'verifiedCount', 'unverifiedCount', 'sortOrder'));
     }
 

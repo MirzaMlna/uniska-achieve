@@ -22,7 +22,8 @@ class User extends Authenticatable
         'nim',
         'study_program',
         'password',
-        'is_approved'
+        'is_approved',
+        'remmember_token'
     ];
 
     /**
