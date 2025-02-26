@@ -73,7 +73,7 @@ class AchievementController extends Controller
             $query->where('student_id', Auth::id());
         }
 
-        $achievements = $query->get();
+        $achievements = $query->paginate(10);
 
         $verifiedCount = Achievement::where('status', 'approved')->count();
         $pendingCount = Achievement::where('status', 'pending')->count();
@@ -135,7 +135,7 @@ class AchievementController extends Controller
         // Simpan data ke database
         Achievement::create($validatedData);
 
-        return redirect()->route('achievements.create')->with('success', 'Prestasi berhasil ditambahkan!');
+        return redirect()->route('achievements.index')->with('success', 'Prestasi berhasil ditambahkan!');
     }
 
 

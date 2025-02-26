@@ -384,6 +384,10 @@
                             </tbody>
                         </table>
                     </form>
+                    <!-- Pagination -->
+                    <div class="mt-5">
+                        {{ $achievements->links() }}
+                    </div>
                 </div>
             </div>
         </div>
