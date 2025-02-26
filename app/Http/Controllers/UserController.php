@@ -147,9 +147,12 @@ class UserController extends Controller
     public function verify($id)
     {
         $user = User::findOrFail($id);
+        // dd(vars: $user); // Debugging sebelum update
+
         $user->update([
             'is_approved' => !$user->is_approved,
         ]);
+
         return redirect()->route('users.index')->with('success', 'Status verifikasi berhasil diperbarui.');
     }
 }

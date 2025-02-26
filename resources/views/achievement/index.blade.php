@@ -223,6 +223,7 @@
 
                                             @if (Auth::user()->role === 'admin')
                                                 <!-- Tombol Verifikasi/Tunda -->
+                                                <form action=""></form>
                                                 <form
                                                     action="{{ route('achievements.updateStatus', $achievement->id) }}"
                                                     method="POST" class="w-full">
