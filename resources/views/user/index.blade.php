@@ -48,15 +48,15 @@
                                 <!-- Baris Filter -->
                                 <tr>
                                     <td class="border border-gray-300 px-4 py-2 text-gray-700">
-                                        <input type="text" name="nim" placeholder="Filter NIM"
+                                        <input type="text" name="nim" placeholder="NIM"
                                             class="w-full px-2 py-1 border rounded" value="{{ request('nim') }}">
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2 text-gray-700">
-                                        <input type="text" name="name" placeholder="Filter Nama"
+                                        <input type="text" name="name" placeholder="Nama"
                                             class="w-full px-2 py-1 border rounded" value="{{ request('name') }}">
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2 text-gray-700">
-                                        <input type="text" name="study_program" placeholder="Filter Prodi"
+                                        <input type="text" name="study_program" placeholder="Prodi"
                                             class="w-full px-2 py-1 border rounded"
                                             value="{{ request('study_program') }}">
                                     </td>
@@ -71,7 +71,7 @@
                                         </select>
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2 text-gray-700">
-                                        <input type="text" name="phone" placeholder="Filter No.Telp"
+                                        <input type="text" name="phone" placeholder="No.Telp"
                                             class="w-full px-2 py-1 border rounded" value="{{ request('phone') }}">
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2 text-gray-700">

@@ -4,7 +4,7 @@
             {{ __('Daftar Prestasi') }}
         </h2>
     </x-slot>
-    <div class="py-12">
+    <div class="py-6">
         <div class="mx-auto sm:px-6 lg:px-8">
             @if (Auth::user()->role === 'admin')
                 <div class="flex space-x-4 mb-6">
@@ -67,17 +67,17 @@
                                         <td class="border border-gray-300 px-4 py-2 text-gray-800"></td>
                                         <td class="border border-gray-300 px-4 py-2 text-gray-800">
                                             <input type="text" name="filter[nim]" value="{{ request('filter.nim') }}"
-                                                class="w-full px-2 py-1 border rounded" placeholder="Filter NIM">
+                                                class="w-full px-2 py-1 border rounded" placeholder="NIM">
                                         </td>
                                         <td class="border border-gray-300 px-4 py-2 text-gray-800">
                                             <input type="text" name="filter[name]"
                                                 value="{{ request('filter.name') }}"
-                                                class="w-full px-2 py-1 border rounded" placeholder="Filter Nama">
+                                                class="w-full px-2 py-1 border rounded" placeholder="Nama">
                                         </td>
                                         <td class="border border-gray-300 px-4 py-2 text-gray-800">
                                             <input type="text" name="filter[study_program]"
                                                 value="{{ request('filter.study_program') }}"
-                                                class="w-full px-2 py-1 border rounded" placeholder="Filter Prodi">
+                                                class="w-full px-2 py-1 border rounded" placeholder="Prodi">
                                         </td>
                                         <td class="border border-gray-300 px-4 py-2 text-gray-800">
                                             <select name="filter[achievement_type]"
@@ -139,7 +139,7 @@
                                         <td class="border border-gray-300 px-4 py-2 text-gray-800">
                                             <input type="number" name="filter[start_year]"
                                                 value="{{ request('filter.start_year') }}"
-                                                class="w-full px-2 py-1 border rounded" placeholder="Filter Tahun Mulai"
+                                                class="w-full px-2 py-1 border rounded" placeholder="Tahun Mulai"
                                                 min="2000" max="{{ date('Y') }}">
                                         </td>
 
@@ -191,7 +191,7 @@
                                         </td>
                                         <td class="border border-gray-300 px-4 py-2">
                                             {{ \Carbon\Carbon::parse($achievement->start_date)->translatedFormat('d F Y') }}
-                                            <span class="text-gray-500">s/d</span>
+                                            <span class="text-gray-500">s/d</span><br>
                                             {{ \Carbon\Carbon::parse($achievement->end_date)->translatedFormat('d F Y') }}
                                         </td>
                                         <td class="border border-gray-300 px-4 py-2">
