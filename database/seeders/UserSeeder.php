@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'nim' => '2210010156',
                 'study_program' => 'Kemahasiswaan',
+                'phone' => '085814313224',
                 'role' => 'admin',
                 'is_approved' => true,
                 'remember_token' => Str::random(10),

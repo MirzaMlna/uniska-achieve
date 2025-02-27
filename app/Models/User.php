@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'nim',
         'study_program',
+        'phone',
         'password',
         'is_approved',
         'remmember_token'

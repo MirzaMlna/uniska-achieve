@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nim', 10)->nullable()->unique(); // NIM mahasiswa (nullable untuk admin)
             $table->string('name');
             $table->string('study_program');
+            $table->string('phone');
             $table->string('password');
             $table->enum('role', ['admin', 'student'])->default('student'); // Role pengguna (admin atau mahasiswa)
             $table->boolean('is_approved')->default(false); // Status persetujuan akun (default: false)

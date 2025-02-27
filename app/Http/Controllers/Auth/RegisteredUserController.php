@@ -33,6 +33,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'nim' => ['required', 'string', 'max:10', 'unique:' . User::class],
             'study_program' => ['required', 'string'],
+            'phone' => ['required', 'string'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -42,6 +43,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'nim' => $request->nim,
             'study_program' => $request->study_program,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
 

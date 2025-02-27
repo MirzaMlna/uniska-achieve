@@ -20,6 +20,7 @@ class UserController extends Controller
             'nim' => 'nullable|string',
             'name' => 'nullable|string',
             'study_program' => 'nullable|string',
+            'phone' => 'nullable|string',
             'role' => 'nullable|string|in:Admin,Student', // Sesuaikan dengan role yang valid
             'is_approved' => 'nullable|boolean',
             'sort' => 'nullable|in:asc,desc', // Pastikan hanya menerima 'asc' atau 'desc'
@@ -68,8 +69,6 @@ class UserController extends Controller
         return view('user.index', compact('users', 'verifiedCount', 'unverifiedCount', 'sortOrder'));
     }
 
-
-
     /**
      * Menampilkan form tambah pengguna.
      */
@@ -95,7 +94,6 @@ class UserController extends Controller
             'nim' => $request->nim,
             'password' => Hash::make($request->password),
             'role' => $request->role,
-            'email_verified_at' => null, // Default belum diverifikasi
         ]);
 
         return redirect()->route('users.index')->with('success', 'Pengguna berhasil ditambahkan.');

@@ -53,10 +53,11 @@ class UserFactory extends Factory
 
         return [
             'name' => $this->faker->name(),
-            'nim' => $this->faker->unique()->numerify('2#########'),
-            'study_program' => $this->faker->randomElement($studyPrograms), // Memilih program studi secara acak dari daftar
+            'nim' => $this->faker->unique()->numerify('22########'),
+            'study_program' => $this->faker->randomElement($studyPrograms),
             'role' => $this->faker->randomElement(['admin', 'student']),
-            'is_approved' => $this->faker->boolean(50), // 70% chance of being approved
+            'phone' => $this->faker->unique()->numerify('08##########'),
+            'is_approved' => $this->faker->boolean(0),
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
             'created_at' => now(),

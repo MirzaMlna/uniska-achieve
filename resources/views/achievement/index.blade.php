@@ -264,12 +264,13 @@
                                                     </a> --}}
 
                                                 <!-- Tombol Hapus -->
-                                                <form action="{{ route('achievements.destroy', $achievement->id) }}"
-                                                    method="POST" onsubmit="return confirm('Yakin ingin menghapus?')"
-                                                    class="w-full">
+                                                <form id="delete-form-{{ $achievement->id }}"
+                                                    action="{{ route('achievements.destroy', $achievement->id) }}"
+                                                    method="POST" class="w-full">
                                                     @csrf
                                                     <input type="hidden" name="_method" value="DELETE">
-                                                    <button type="submit"
+                                                    <button type="button"
+                                                        onclick="confirmDelete({{ $achievement->id }})"
                                                         class="bg-red-700 hover:bg-red-900 text-white py-1 px-3 rounded w-full">
                                                         Hapus
                                                     </button>
@@ -393,15 +394,57 @@
         </div>
         </div>
 
+        <!-- SweetAlert2 Script -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
+            // Fungsi untuk konfirmasi penghapusan
+            function confirmDelete(userId) {
+                Swal.fire({
+                    title: "Apakah Anda yakin?",
+                    text: "Data yang dihapus tidak bisa dikembalikan!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Ya, Hapus!",
+                    cancelButtonText: "Batal"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('delete-form-' + userId).submit();
+                    }
+                });
+            }
+
+            // Fungsi untuk membuka modal
             function openModal(modalId, event) {
                 event.preventDefault(); // Mencegah perilaku default tombol
                 document.getElementById(modalId).classList.remove('hidden');
             }
 
+            // Fungsi untuk menutup modal
             function closeModal(modalId) {
                 document.getElementById(modalId).classList.add('hidden');
             }
+
+            // Tampilkan pesan sukses jika ada
+            @if (session('success'))
+                Swal.fire({
+                    title: "Sukses!",
+                    text: "{{ session('success') }}",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                });
+            @endif
+
+            // Tampilkan pesan error jika ada
+            @if (session('error'))
+                Swal.fire({
+                    title: "Error!",
+                    text: "{{ session('error') }}",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+            @endif
         </script>
 
     </x-app-layout>
