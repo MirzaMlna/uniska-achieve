@@ -6,13 +6,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
-    /**
-     * Menampilkan daftar pengguna.
-     */
     public function index(Request $request)
     {
         // Validasi input request
@@ -69,42 +68,42 @@ class UserController extends Controller
         return view('user.index', compact('users', 'verifiedCount', 'unverifiedCount', 'sortOrder'));
     }
 
-    /**
-     * Menampilkan form tambah pengguna.
-     */
     public function create()
     {
         return view('user.create');
     }
 
-    /**
-     * Menyimpan pengguna baru ke database.
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'nim' => 'required|numeric|unique:users,nim',
-            'password' => 'required|string|min:6|confirmed',
-            'role' => 'required|in:admin,mahasiswa,dosen'
+            'nim' => ['required', 'string', 'max:10', 'unique:' . User::class],
+            'name' => ['required', 'string', 'max:255'],
+            'study_program' => ['required', 'string'],
+            'phone' => ['required', 'string'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        User::create([
+        // dd($request->all());
+
+        $user = User::create([
             'name' => $request->name,
             'nim' => $request->nim,
+            'study_program' => $request->study_program,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
+            'role' => 'Admin',
+            'is_approved' => true,
         ]);
+
+        event(new Registered($user));
 
         return redirect()->route('users.index')->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
-    /**
-     * Menampilkan form edit pengguna.
-     */
+
     public function edit(User $user)
     {
-        return view('user.edit', compact('user'));
+        // 
     }
 
     /**

@@ -23,6 +23,7 @@ class User extends Authenticatable
         'study_program',
         'phone',
         'password',
+        'role',
         'is_approved',
         'remmember_token'
     ];

@@ -51,8 +51,9 @@ class AchievementController extends Controller
             }
 
             if (!empty($filters['achievement_level'])) {
-                $query->where('achievement_level', 'like', '%' . $filters['achievement_level'] . '%');
+                $query->where('achievement_level', '=', $filters['achievement_level']);
             }
+
 
             if (!empty($filters['achievement_title'])) {
                 $query->where('achievement_title', 'like', '%' . $filters['achievement_title'] . '%');
