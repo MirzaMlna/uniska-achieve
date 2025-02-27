@@ -157,7 +157,7 @@
                         <label for="award_photo_file"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Foto
                             Penyerahan
-                            Penghargaan <span class="text-gray-500">.jpg</span></label>
+                            Penghargaan <span class="text-gray-500">.pdf (Maksimal 5 mb)</span></label>
                         <input type="file" id="award_photo_file" name="award_photo_file"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
                     </div>
@@ -166,7 +166,7 @@
                     <div class="mb-4">
                         <label for="student_assignment_letter"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Surat Tugas
-                            Mahasiswa <span class="text-gray-500">.pdf</span></label>
+                            Mahasiswa <span class="text-gray-500">.pdf (Maksimal 5 mb)</span></label>
                         <input type="file" id="student_assignment_letter" name="student_assignment_letter"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
                     </div>
@@ -175,7 +175,7 @@
                     <div class="mb-4">
                         <label for="supervisor_assignment_letter"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Surat Tugas
-                            Dosen Pembimbing <span class="text-gray-500">.pdf</span></label>
+                            Dosen Pembimbing <span class="text-gray-500">.pdf (Maksimal 5 mb)</span></label>
                         <input type="file" id="supervisor_assignment_letter" name="supervisor_assignment_letter"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
                     </div>

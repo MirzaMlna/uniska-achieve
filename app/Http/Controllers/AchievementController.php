@@ -109,7 +109,7 @@ class AchievementController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'news_link' => 'nullable|url',
             'certificate_file' => 'nullable|file|mimes:pdf|max:5120',
-            'award_photo_file' => 'nullable|file|mimes:jpg,jpeg,png|max:5120',
+            'award_photo_file' => 'nullable|file|mimes:pdf|max:5120',
             'student_assignment_letter' => 'nullable|file|mimes:pdf|max:5120',
             'supervisor_assignment_letter' => 'nullable|file|mimes:pdf|max:5120',
         ]);

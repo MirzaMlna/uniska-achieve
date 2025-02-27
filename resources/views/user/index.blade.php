@@ -28,14 +28,14 @@
                         <table class="w-full border-collapse border border-gray-300 dark:border-gray-600">
                             <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white">
                                 <tr>
-                                    <th class="border border-gray-300 px-4 py-2 text-start">NIM</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-start">Nama</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-start">Program Studi</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-start">Sebagai</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-start">No.Telp</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-center">Verifikasi</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-start">Mendaftar Pada</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-start">Aksi</th>
+                                    <th class="border px-4 py-2 text-start">NIM</th>
+                                    <th class="border px-4 py-2 text-start">Nama</th>
+                                    <th class="border px-4 py-2 text-start">Program Studi</th>
+                                    <th class="border px-4 py-2 text-start">Sebagai</th>
+                                    <th class="border px-4 py-2 text-start">No.Telp</th>
+                                    <th class="border px-4 py-2 text-center">Verifikasi</th>
+                                    <th class="border px-4 py-2 text-start">Mendaftar Pada</th>
+                                    <th class="border px-4 py-2 text-start">Aksi</th>
                                 </tr>
                                 <!-- Baris Filter -->
                                 <tr>

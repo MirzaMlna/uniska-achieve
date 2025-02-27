@@ -50,18 +50,18 @@
             <div class="overflow-x-auto">
                 <form action="{{ route('achievements.index') }}" method="GET">
                     <table class="w-full border-collapse border border-gray-300 dark:border-gray-700">
-                        <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                        <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white">
                             <tr>
-                                <th class="border border-gray-300 px-4 py-2">No</th>
-                                <th class="border border-gray-300 px-4 py-2">NIM</th>
-                                <th class="border border-gray-300 px-4 py-2">Nama</th>
-                                <th class="border border-gray-300 px-4 py-2">Program Studi</th>
-                                <th class="border border-gray-300 px-4 py-2">Jenis Prestasi</th>
-                                <th class="border border-gray-300 px-4 py-2">Tingkat Prestasi</th>
-                                <th class="border border-gray-300 px-4 py-2">Capaian Prestasi</th>
-                                <th class="border border-gray-300 px-4 py-2">Tanggal Kegiatan</th>
-                                <th class="border border-gray-300 px-4 py-2">Status</th>
-                                <th class="border border-gray-300 px-4 py-2">Aksi</th>
+                                <th class="border px-4 py-2">No</th>
+                                <th class="border px-4 py-2">NIM</th>
+                                <th class="border px-4 py-2">Nama</th>
+                                <th class="border px-4 py-2">Program Studi</th>
+                                <th class="border px-4 py-2">Jenis Prestasi</th>
+                                <th class="border px-4 py-2">Tingkat Prestasi</th>
+                                <th class="border px-4 py-2">Capaian Prestasi</th>
+                                <th class="border px-4 py-2">Tanggal Kegiatan</th>
+                                <th class="border px-4 py-2">Status</th>
+                                <th class="border px-4 py-2">Aksi</th>
                             </tr>
                             @if (Auth::user()->role === 'admin')
                                 <!-- Baris Filter -->
@@ -257,13 +257,14 @@
                                                     </button>
                                                 </form>
                                             @elseif (Auth::user()->role === 'student')
-                                                {{-- <!-- Tombol Edit -->
-                                                    <a href="{{ route('achievements.edit', $achievement->id) }}"
-                                                        class="bg-yellow-500 hover:bg-yellow-700 text-black py-1 px-3 rounded text-center w-full">
-                                                        Edit
-                                                    </a> --}}
+                                                <!-- Tombol Edit -->
+                                                <a href="{{ route('achievements.edit', $achievement->id) }}"
+                                                    class="bg-yellow-500 hover:bg-yellow-700 text-black py-1 px-3 rounded text-center w-full">
+                                                    Edit
+                                                </a>
 
                                                 <!-- Tombol Hapus -->
+                                                <form action=""></form>
                                                 <form id="delete-form-{{ $achievement->id }}"
                                                     action="{{ route('achievements.destroy', $achievement->id) }}"
                                                     method="POST" class="w-full">
