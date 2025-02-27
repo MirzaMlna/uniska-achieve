@@ -31,7 +31,8 @@
                                     <th class="border border-gray-300 px-4 py-2 text-start">NIM</th>
                                     <th class="border border-gray-300 px-4 py-2 text-start">Nama</th>
                                     <th class="border border-gray-300 px-4 py-2 text-start">Program Studi</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-start">Role</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-start">Sebagai</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-start">No.Telp</th>
                                     <th class="border border-gray-300 px-4 py-2 text-center">Verifikasi</th>
                                     <th class="border border-gray-300 px-4 py-2 text-start">Mendaftar Pada</th>
                                     <th class="border border-gray-300 px-4 py-2 text-start">Aksi</th>
@@ -60,6 +61,10 @@
                                             <option value="Student"
                                                 {{ request('role') == 'Student' ? 'selected' : '' }}>Mahasiswa</option>
                                         </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2 text-gray-700">
+                                        <input type="text" name="phone" placeholder="Filter No.Telp"
+                                            class="w-full px-2 py-1 border rounded" value="{{ request('phone') }}">
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2 text-gray-700">
                                         <select name="is_approved"
@@ -101,6 +106,7 @@
                                         <td class="border border-gray-300 px-4 py-2">{{ $user->name }}</td>
                                         <td class="border border-gray-300 px-4 py-2">{{ $user->study_program }}</td>
                                         <td class="border border-gray-300 px-4 py-2">{{ ucfirst($user->role) }}</td>
+                                        <td class="border border-gray-300 px-4 py-2">{{ ucfirst($user->phone) }}</td>
                                         <td class="border border-gray-300 px-4 py-2 text-center">
                                             @if ($user->is_approved)
                                                 <span class="px-3 py-1 text-green-500 rounded-lg">Sudah</span>

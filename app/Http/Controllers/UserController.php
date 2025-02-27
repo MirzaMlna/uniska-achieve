@@ -37,22 +37,22 @@ class UserController extends Controller
         $query->when($request->filled('nim'), function ($q) use ($request) {
             $q->where('nim', 'like', '%' . $request->nim . '%');
         });
-
         // Filter berdasarkan Nama
         $query->when($request->filled('name'), function ($q) use ($request) {
             $q->where('name', 'like', '%' . $request->name . '%');
         });
-
         // Filter berdasarkan program studi
         $query->when($request->filled('study_program'), function ($q) use ($request) {
             $q->where('study_program', 'like', '%' . $request->study_program . '%');
         });
-
         // Filter berdasarkan Role
         $query->when($request->filled('role'), function ($q) use ($request) {
             $q->where('role', $request->role);
         });
-
+        // Filter berdasarkan No.Telp
+        $query->when($request->filled('phone'), function ($q) use ($request) {
+            $q->where('phone', 'like', '%' . $request->phone . '%');
+        });
         // Filter berdasarkan status verifikasi
         $query->when($request->filled('is_approved'), function ($q) use ($request) {
             $q->where('is_approved', $request->is_approved);
