@@ -19,13 +19,22 @@
         </div>
 
         <!-- Name -->
-        <div>
+        <div class="mt-4">
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
                 required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
+        <!-- Name -->
+        <div class="mt-4">
+            <x-input-label for="phone" :value="__('No. Telepon')" />
+            <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')"
+                required autofocus autocomplete="phone" />
+            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+        </div>
+
+        {{-- Study Program --}}
         <div class="mt-4">
             <label for="study_program" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Program Studi

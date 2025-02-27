@@ -29,8 +29,13 @@
             <x-text-input id="nim" name="nim" type="number" class="mt-1 block w-full" :value="old('nim', $user->nim)"
                 required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('nim')" />
+        </div>
 
-
+        <div>
+            <x-input-label for="phone" :value="__('No. Telepon')" />
+            <x-text-input id="phone" name="phone" type="number" class="mt-1 block w-full" :value="old('phone', $user->phone)"
+                required autocomplete="username" />
+            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
         </div>
 
         <div class="flex items-center gap-4">

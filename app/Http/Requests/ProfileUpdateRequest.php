@@ -20,7 +20,11 @@ class ProfileUpdateRequest extends FormRequest
             'nim' => [
                 'required',
                 'string',
-                'lowercase',
+                Rule::unique(User::class)->ignore($this->user()->id),
+            ],
+            'phone' => [
+                'required',
+                'string',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
         ];
