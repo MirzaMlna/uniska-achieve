@@ -90,7 +90,7 @@ class AchievementController extends Controller
      */
     public function create()
     {
-        return view('achievement.achievement-create');
+        return view('achievement.create');
     }
 
     /**
