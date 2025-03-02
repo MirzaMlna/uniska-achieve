@@ -33,6 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/achievements/{id}/update-status', [AchievementController::class, 'updateStatus'])
         ->name('achievements.updateStatus');
     Route::post('/user/{id}/verify', [UserController::class, 'verify'])->name('user.verify');
+    Route::get('/achievement/print', function () {
+        return view('achievement.print');
+    });
 });
 
 require __DIR__ . '/auth.php';

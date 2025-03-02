@@ -139,6 +139,10 @@ class AchievementController extends Controller
         return redirect()->route('achievements.index')->with('success', 'Prestasi berhasil ditambahkan!');
     }
 
+    public function print()
+    {
+        return view('achievement.print');
+    }
 
     /**
      * Display the specified resource.
